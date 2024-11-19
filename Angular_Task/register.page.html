@@ -1,0 +1,36 @@
+<div class="register-popup">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <input type="text" formControlName="firstName" placeholder="First Name" />
+      <div *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched">
+        <small>Only alphabetic characters (max 20).</small>
+      </div>
+  
+      <input type="file" (change)="onPhotoUpload($event)" />
+      <input type="range" formControlName="age" min="1" max="100" />
+      <div>
+        <label>Interests:</label>
+        <input type="text" (keydown.enter)="addInterest($event)" />
+        <span *ngFor="let interest of interests">
+          {{ interest }} <button (click)="removeInterest(interest)">x</button>
+        </span>
+      </div>
+  
+      <select formControlName="addressType" (change)="onAddressChange($event.target.value)">
+        <option value="home">Home</option>
+        <option value="company">Company</option>
+      </select>
+  
+      <div *ngIf="addressType === 'home'">
+        <input type="text" formControlName="address1" placeholder="Address 1" />
+        <input type="text" formControlName="address2" placeholder="Address 2" />
+      </div>
+  
+      <div *ngIf="addressType === 'company'">
+        <input type="text" formControlName="companyAddress1" placeholder="Company Address 1" />
+        <input type="text" formControlName="companyAddress2" placeholder="Company Address 2" />
+      </div>
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  
